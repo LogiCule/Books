@@ -21,8 +21,8 @@ public class BookController {
             new Book("The Psychology of Money", "Morgan Housel", "Non-Fiction"),
             new Book("The Hobbit", "J.R.R. Tolkien", "Fiction"),
             new Book("Educated", "Tara Westover", "Non-Fiction"),
-            new Book("The Catcher in the Rye", "J.D. Salinger", "Fiction"),
-            new Book("Deep Work", "Cal Newport", "Non-Fiction")
+            new Book("Deep Work", "Cal Newport", "Non-Fiction"),
+            new Book("The Catcher in the Rye", "J.D. Salinger", "Fiction")
     ));
 
 
