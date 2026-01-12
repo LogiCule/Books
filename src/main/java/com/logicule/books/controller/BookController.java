@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/books")
 public class BookController {
     List<Book> bookList = new ArrayList<>(List.of(
             new Book(1,"1984", "George Orwell", "Fiction"),
@@ -24,14 +24,14 @@ public class BookController {
     ));
 
 
-    @GetMapping("/books")
+    @GetMapping
     public List<Book> getBooks(@RequestParam(required = false) String category){
         if(category==null)
             return bookList;
         return bookList.stream().filter(book->book.getCategory().equalsIgnoreCase(category)).toList();
     }
 
-    @GetMapping("/books/{id}")
+    @GetMapping("/{id}")
     public Book getBookById(@PathVariable int id){
         return bookList.stream()
                 .filter(book -> book.getId() == id)
@@ -39,7 +39,7 @@ public class BookController {
                 .orElse(null);
     }
 
-    @GetMapping("/books/search/{title}")
+    @GetMapping("/search/{title}")
     public Book getBookByTitle(@PathVariable String title){
         return bookList.stream()
                 .filter(book -> book.getTitle().toLowerCase().contains(title.toLowerCase()))
@@ -47,7 +47,7 @@ public class BookController {
                 .orElse(null);
     }
 
-    @PostMapping("/books")
+    @PostMapping
     public Book addBook(@RequestBody Book book){
         if(bookList.contains(book))
             return null;
@@ -55,7 +55,7 @@ public class BookController {
         return book;
     }
 
-    @PutMapping("/books/{id}")
+    @PutMapping("/{id}")
     public Book updateBook(@PathVariable int id, @RequestBody Book updatedBook){
         for (int i = 0; i < bookList.size(); i++) {
             if(bookList.get(i).getId() == id){
@@ -64,5 +64,16 @@ public class BookController {
             }
         }
         return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable int id){
+        for (int i = 0; i < bookList.size(); i++) {
+            if(bookList.get(i).getId() == id){
+                bookList.remove(i);
+                return "Book with id "+id+" deleted successfully.";
+            }
+        }
+        return "Book with id "+id+" not found.";
     }
 }
