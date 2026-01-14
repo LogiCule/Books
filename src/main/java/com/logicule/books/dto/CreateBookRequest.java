@@ -1,34 +1,16 @@
-package com.logicule.books.entity;
+package com.logicule.books.dto;
 
-public class Book {
-    private long id;
+public class CreateBookRequest {
     private String title;
     private String author;
     private String category;
     private int rating;
 
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-    public Book(){}
-    public Book(long id, String title, String author, String category, int rating) {
-        this.id = id;
+    public CreateBookRequest(String title, String author, String category, int rating) {
         this.title = title;
         this.author = author;
         this.category = category;
         this.rating = rating;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -53,5 +35,13 @@ public class Book {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
