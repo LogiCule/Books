@@ -3,6 +3,7 @@ package com.logicule.books.controller;
 import com.logicule.books.dto.CreateBookRequest;
 import com.logicule.books.dto.UpdateBookRequest;
 import com.logicule.books.entity.Book;
+import com.logicule.books.mapper.BookMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class BookController {
 
     @PostMapping
     public Book addBook(@RequestBody CreateBookRequest book){
-        Book newBook = new Book(idGenerator.getAndIncrement(), book.getTitle(), book.getAuthor(), book.getCategory(), book.getRating());
+        Book newBook = BookMapper.toEntity(book, idGenerator.getAndIncrement());
         bookList.add(newBook);
         return newBook;
     }
@@ -59,10 +60,7 @@ public class BookController {
     public Book updateBook(@PathVariable int id, @RequestBody UpdateBookRequest updatedBook){
         for (Book book : bookList) {
             if (book.getId() == id) {
-                book.setTitle(updatedBook.getTitle());
-                book.setAuthor(updatedBook.getAuthor());
-                book.setCategory(updatedBook.getCategory());
-                book.setRating(updatedBook.getRating());
+                BookMapper.updateEntity(book, updatedBook);
                 return book;
             }
         }

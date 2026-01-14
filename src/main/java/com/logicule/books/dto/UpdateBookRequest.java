@@ -4,9 +4,9 @@ public class UpdateBookRequest {
     private String title;
     private String author;
     private String category;
-    private int rating;
+    private Integer rating;
 
-    public UpdateBookRequest(String title, String author, String category, int rating) {
+    public UpdateBookRequest(String title, String author, String category, Integer rating) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -37,7 +37,7 @@ public class UpdateBookRequest {
         this.category = category;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
