@@ -5,10 +5,10 @@ import com.logicule.books.dto.UpdateBookRequest;
 import com.logicule.books.entity.Book;
 import com.logicule.books.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public class BookController {
                description = "Retrieve a list of all books in the library. Optionally, filter the books by category by providing a category query parameter.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<Book> getBooks(@RequestParam(required = false) String category) {
+    public List<Book> getBooks(@Parameter(description = "optional query parameter") @RequestParam(required = false) String category) {
         return bookService.getBooks(category);
     }
 
@@ -37,7 +37,7 @@ public class BookController {
                description = "Retrieve a specific book by its unique ID.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable @Min(value=1) long id) {
+    public Book getBookById(@Parameter(description = "Id of book to be retrieved") @PathVariable @Min(value=1) long id) {
         return bookService.getBookById(id);
     }
 
@@ -45,7 +45,7 @@ public class BookController {
                description = "Search for books that contain the specified title string.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/search/{title}")
-    public List<Book> getBookByTitle(@PathVariable String title) {
+    public List<Book> getBookByTitle(@Parameter( description = "search key") @PathVariable String title) {
         return bookService.searchByTitle(title);
     }
 
@@ -61,7 +61,7 @@ public class BookController {
                description = "Update the details of an existing book by its ID. Provide the updated book details in the request body.")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable @Min(value=1) long id,
+    public Book updateBook(@Parameter(description = "Id of book to be updated") @PathVariable @Min(value=1) long id,
                           @Valid @RequestBody UpdateBookRequest updatedBook) {
         return bookService.updateBook(id, updatedBook);
     }
@@ -70,7 +70,7 @@ public class BookController {
                description = "Delete a book from the library by its unique ID.")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable @Min(value=1) long id) {
+    public void deleteBook(@Parameter(description = "Id of book to be deleted") @PathVariable @Min(value=1) long id) {
          bookService.deleteBook(id);
 
     }
