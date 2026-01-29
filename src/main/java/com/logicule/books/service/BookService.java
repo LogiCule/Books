@@ -1,15 +1,11 @@
 package com.logicule.books.service;
 
-import com.logicule.books.dto.BookErrorResponse;
 import com.logicule.books.dto.CreateBookRequest;
 import com.logicule.books.dto.UpdateBookRequest;
 import com.logicule.books.entity.Book;
 import com.logicule.books.exception.BookNotFoundException;
 import com.logicule.books.mapper.BookMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,16 +63,15 @@ public class BookService {
                 return book;
             }
         }
-        return null;
+        throw new BookNotFoundException("Book with id "+id+" not found");
     }
 
     public void deleteBook(long id) {
-        bookList.removeIf(book -> book.getId() == id);
+        boolean status  = bookList.removeIf(book -> book.getId() == id);
+        if(!status)
+            throw new BookNotFoundException("Book with id "+id+" not found");
+
     }
 
-    @ExceptionHandler
-    public ResponseEntity<BookErrorResponse> handleException(BookNotFoundException exception){
-        BookErrorResponse error = new BookErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage(), System.currentTimeMillis());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
+
 }

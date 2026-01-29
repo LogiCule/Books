@@ -1,4 +1,4 @@
-package com.logicule.books.dto;
+package com.logicule.books.exception;
 
 public class BookErrorResponse {
     private int status;
